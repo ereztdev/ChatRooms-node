@@ -23,9 +23,9 @@ var messageHistory = [];
 
 var clientArray = [];
 io.on('connection', socket => {
-  let ip = socket.handshake.address;
 
-  let user = new class User{};
+  const ip = socket.handshake.address;
+  const user = new class User{};
   user.ip = ip;
   user.id = Date.now();
 
@@ -40,7 +40,7 @@ io.on('connection', socket => {
   socket.on('new message', data => {
     console.log({data});
     messageHistory.push(data)
-    socket.broadcast.to(data.room).emit('receive message', data)
+    socket.to(data.room).emit('receive message', data.message);
     console.log({messageHistory});
   });
   socket.on('room', data => {
