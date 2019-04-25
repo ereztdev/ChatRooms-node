@@ -40,7 +40,7 @@ io.on('connection', socket => {
   socket.on('new message', data => {
     console.log({data});
     messageHistory.push(data)
-    socket.to(data.room).emit('receive message', data.message);
+    io.in(data.room).emit('receive message', {user, message:data.message});
     console.log({messageHistory});
   });
   socket.on('room', data => {
